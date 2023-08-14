@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="pt.br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"><!-- -->
+    <title>Calculadora</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+    <style>
+        * {/*configuracoes padrao para todos*/
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Helvetica Neue", sans-serif;    
+        }
+
+        body {
+            background: radial-gradient(circle, #17338f, #6c3cf0);
+        }
+
+        .container {    
+            display: grid;/*tipo de display*/
+            width: 100vh;/*altura*/
+            height: 100vh;/*largura*/
+            display: grid;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .grid {
+            display: grid;/*tipo de display*/
+            height: 480px;/*altura*/
+            width: 320px;/*largura*/
+        }
+
+        .number {/*class number*/
+            color:   rgb(34, 34, 34);/*cor letras*/
+            font-size: 15px;/*tamanho fontes*/
+            cursor: pointer;/*tipo de cursor*/
+            outline: none;/*remover bordar ao clicar*/
+            border: 0.5px solid rgb(185, 185, 185);/*borda 0.5px cor solida rgb*/
+        }
+
+
+        .gray {/*cor de fundo dos botoes*/
+            background-color: rgb(250, 250, 250);
+        }
+        .white {
+            background-color: white;
+        }
+        .result {
+            background-color: rgb(255, 141, 64);
+        }
+
+
+        .gray:hover {/*efeito ao clicar nos botoes*/
+            opacity: 0.8;        
+        }
+        .white:hover {
+            opacity: 0.8;
+        }
+        .result:hover {
+            opacity: 0.8;
+        }
+
+        .number:active {/*cor de fundo do display*/
+            background-color: white;
+            opacity: 0.7;
+            color: rgb(163, 163, 163);
+        }
+
+
+        .display {/*display*/
+            grid-area: display;/*tipo de display*/
+            background-color:  rgb(219, 219, 219);/*cor de fundo*/
+            opacity: 0.8;/*opacidade*/
+            font-size: 20px;/*tamanho fontes*/
+            color:   rgb(34, 34, 34);/*cor letras*/
+            border: none;/*remover borda */
+            border-top-left-radius: 4px;/*arredondar borda esquerda*/
+            border-top-right-radius: 4px;/*arredondar borda direita*/
+            font-size: 20px;
+            color: rgb(0, 0, 0);
+            padding-left: 15px;
+        }
+
+        .ce {/*identificacao dos botoes*/
+            grid-area: ce;
+
+        }
+        .cc {
+            grid-area: cc;
+        }
+        .del {
+            grid-area: del;
+        }
+        .bar {
+            grid-area: bar;
+        }
+        .seven {
+            grid-area: seven;
+        }
+        .eight {
+            grid-area: eight;
+        }
+        .nine {
+            grid-area: nine;
+        }
+        .coisa {
+            grid-area: coisa;
+        }
+        .four {
+            grid-area: four;
+        }
+        .five {
+            grid-area: five;
+        }
+        .six {
+            grid-area: six;
+        }
+        .risco {
+            grid-area: risco;
+        }
+        .one {
+            grid-area: one;
+        }
+        .thwo {
+            grid-area: thwo;
+        }
+        .tree {
+            grid-area: tree;
+        }
+        .soma {
+            grid-area: soma;
+        }    
+        .nada {
+            grid-area: nada;
+        }
+        .pont {
+            grid-area: pont;
+        }
+        .igual {
+            grid-area: igual;
+        }
+
+        section {/*organizacao dos botoes*/
+            grid-template-areas:
+                "display display display display"
+                "ce ce cc bar"
+                "seven eight nine coisa"
+                "four five six risco"
+                "one thwo tree soma"
+                "nada pont igual igual"
+            ;
+        }
+
+        #nav {/*configuracoes barra de navegacao*/
+            margin-left: 30px;
+            font-family: "Helvetica Neue", sans-serif;
+            display: grid;
+            justify-content: center;
+            align-items: center;
+            color: white;
+        }
+
+
+        footer {/*configuracoes do roda-pe*/  
+            height: 50px;
+            width: auto;   
+        }
+
+
+        #rod {/*configuracoes do roda-pe*/  
+            margin-left: 100px;
+            font-size: 12px;
+        }
+
+
+    </style>
+</head>
+<body><!--corpo-->
+    <nav  class="navbar navbar-expand-lg"><!-- barra de navegaçao do site -->
+        <div id="div" class="container-fluid"><!--container com a barra de navegacao-->
+            <a id="nav" class="navbar-brand" href="#">Calculadora online</a>
+           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        </div>
+    </nav>
+    <div class="container"><!--container com a calculadora -->
+        
+        <section class="grid"><!--seção dedicada a calculadora-->
+            <input disabled id="input-value" class="display disp"><!--display da calculadora -->
+
+            <button onclick="clearInput()" class="number gray ce">CE</button><!--botoes-->
+            <button onclick="invertValue()" class="number gray cc">+/-</button>
+            <button onclick="insertValues('/')" class="number gray bar">/</button>
+            <button onclick="insertValues('7')" class="number white seven">7</button>
+            <button onclick="insertValues('8')" class="number white eight">8</button>
+            <button onclick="insertValues('9')" class="number white nine">9</button>
+            <button onclick="insertValues('*')" class="number gray coisa">*</button>
+            <button onclick="insertValues('4')" class="number white four">4</button>
+            <button onclick="insertValues('5')" class="number white five">5</button>
+            <button onclick="insertValues('6')" class="number white six">6</button>
+            <button onclick="insertValues('-')" class="number gray risco">-</button>
+            <button onclick="insertValues('1')" class="number white one">1</button>
+            <button onclick="insertValues('2')" class="number white thwo">2</button>
+            <button onclick="insertValues('3')" class="number white tree">3</button>
+            <button onclick="insertValues('+')" class="number gray soma">+</button>
+            <button onclick="insertValues('0')" class="number white nada">0</button>
+            <button onclick="insertValues('.')" class="number white pont">.</button>
+            <button onclick="calculate()" class="number result igual">=</button>
+        </section>
+    </div>
+    <footer  class="navbar "><!--roda-pe do site -->
+        <div id="foot" class="container-fluid">
+            <a id="rod" class="navbar-brand" href="#">Copyright © 2023 Software Andament Company - Todos os direitos reservados</a><!--texto do roda-pe-->
+        </div>
+    </footer>
+    <script>
+        function insertValues(num){/* função para manipular os numeros*/
+    const input = document.getElementById('input-value').value
+    document.getElementById('input-value').value = input + num /* variavel para guardar os numeros*/
+
+
+}
+
+function calculate(){/*metodo para calculo dos values dos input*/  
+    const input = document.getElementById('input-value').value
+    document.getElementById('input-value').value = eval(input)
+}
+
+function clearInput(){/*limpar display*/  
+    document.getElementById('input-value').value = ""
+}
+
+function invertValue(){/*funcao para inverter o numero de positivo para negativo e vice versa*/  
+    calculate()/*primeiro calcula depois inverte*/
+    const input = document.getElementById('input-value').value
+    document.getElementById('input-value').value = input * -1
+
+}
+    </script><!--codigo js -->
+</body>
+</html>
